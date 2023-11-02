@@ -1,0 +1,38 @@
+services:
+  postgres:
+    container_name: database
+    image: postgres:16.0-alpine
+    ports:
+      - ${DATABASE_PORT}:5432
+    volumes:
+      - boilerplate-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    restart: unless-stopped
+
+  api:
+    container_name: node_19
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - ./:/usr/src/app
+    command: npm run start:dev
+    restart: unless-stopped
+
+  mail-server:
+    container_name: mail
+    image: maildev/maildev
+    ports:
+      - '${MAIL_PORT_CLIENT}:${MAIL_PORT_CLIENT}'
+      - '${MAIL_PORT}:${MAIL_PORT}'
+
+volumes:
+  boilerplate-db:
