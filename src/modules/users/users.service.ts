@@ -14,7 +14,7 @@ export class UsersService extends ABaseService<User> {
     super(usersRepository);
   }
 
-  async findManyWithPagination(page: number, limit: number): Promise<User[]> {
+  async findUsersWithPagination(page: number, limit: number): Promise<User[]> {
     return await this.usersRepository.findManyWithPagination(page, limit);
   }
 }

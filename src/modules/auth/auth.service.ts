@@ -7,11 +7,9 @@ import {
 import { UsersService } from '../users/users.service';
 import { NullableType } from 'joi';
 import { User } from '../users/entities/user.entity';
-import { RoleEnum } from '../roles/roles.enum';
 import { LoginResponseType } from 'src/utils/types/login-response.type';
 import { JwtService } from '@nestjs/jwt';
 import { DeepPartial } from 'typeorm';
-import { Role } from '../roles/entities/role.entity';
 import {
   accessTokenPrivateKey,
   refreshTokenPrivateKey,
@@ -36,18 +34,22 @@ export class AuthService {
     private readonly forgotService: ForgotService,
   ) {}
 
+  async me(id: string) {
+    return await this.usersService.findOneByCondition({ id });
+  }
+
   async register(data: DeepPartial<User>): Promise<void> {
-    const exitUser: NullableType<User> =
-      await this.usersService.findOneByCondition({
-        email: data.email,
-      });
-    if (exitUser) {
+    const existUser = await this.usersService.findOneByCondition({
+      email: data.email,
+    });
+
+    if (existUser) {
       throw new HttpException(
         {
-          status: HttpStatus.CREATED,
+          status: HttpStatus.CONFLICT,
           errors: 'Email was used',
         },
-        HttpStatus.CREATED,
+        HttpStatus.CONFLICT,
       );
     }
 
@@ -61,7 +63,6 @@ export class AuthService {
 
     await this.usersService.createOne({
       ...data,
-      role: { id: RoleEnum.USER, name: 'User' } as Role,
       hash,
     });
 

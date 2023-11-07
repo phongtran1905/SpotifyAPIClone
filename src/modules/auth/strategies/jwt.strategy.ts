@@ -5,10 +5,7 @@ import { accessTokenPublicKey } from 'src/constraints/jwt.constrant';
 import { AccessTokenPayload } from 'src/utils/types/access-token-payload.type';
 
 @Injectable()
-export class AccessTokenStrategy extends PassportStrategy(
-  Strategy,
-  'access-token',
-) {
+export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

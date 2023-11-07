@@ -10,6 +10,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserSessionsModule } from './modules/user-sessions/user-sessions.module';
 import { MailsModule } from './modules/mails/mails.module';
 import { ForgotModule } from './modules/forgot/forgot.module';
+import { TracksModule } from './modules/tracks/tracks.module';
+import { PlaylistsModule } from './modules/playlists/playlists.module';
+import { GenresModule } from './modules/genres/genres.module';
 import mailerConfig from './configs/mailer.config';
 
 @Module({
@@ -57,6 +60,9 @@ import mailerConfig from './configs/mailer.config';
     UserSessionsModule,
     MailsModule,
     ForgotModule,
+    TracksModule,
+    PlaylistsModule,
+    GenresModule,
   ],
   controllers: [],
   providers: [],

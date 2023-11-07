@@ -4,6 +4,12 @@ import { NullableType } from 'src/utils/types/nullable.type';
 
 export abstract class ABaseRepository<T> implements IBaseRepository<T> {
   protected constructor(protected readonly repository: Repository<T>) {}
+  async findManyByCondition(condition: FindOptionsWhere<T>): Promise<T[]> {
+    return await this.repository.findBy(condition);
+  }
+  async exitOne(condition: FindOptionsWhere<T>): Promise<boolean> {
+    return await this.repository.exist(condition);
+  }
 
   async saveOne(entity: T): Promise<T> {
     return await this.repository.save(entity);

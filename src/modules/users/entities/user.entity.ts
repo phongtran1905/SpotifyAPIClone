@@ -35,7 +35,6 @@ export class User extends HelperEntity {
   role: Role;
 
   @Column({ default: StatusEnum.INACTIVE })
-  @Exclude()
   status: number;
 
   @Column({ nullable: true, type: String })

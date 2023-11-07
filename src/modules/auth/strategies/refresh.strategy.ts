@@ -7,7 +7,7 @@ import { RefreshTokenPayload } from 'src/utils/types/refresh-token-payload.type'
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(
   Strategy,
-  'refresh-token',
+  'refresh',
 ) {
   private logger = new Logger(RefreshTokenStrategy.name);
   constructor() {

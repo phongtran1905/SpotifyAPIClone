@@ -7,9 +7,10 @@ import {
   USERS_REPOSITORY,
   UsersRepository,
 } from 'src/repositories/users.repository';
+import { Playlist } from '../playlists/entities/playlist.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User, Playlist])],
   controllers: [UsersController],
   providers: [
     UsersService,
